@@ -1,7 +1,7 @@
 {
   "name": "pulse-toast",
-  "version": "1.0.11",
-  "description": "",
+  "version": "1.0.13",
+  "description": "Lightweight toast notification library for React",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,8 +16,20 @@
     "build": "tsup",
     "dev": "tsup --watch"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "react",
+    "toast",
+    "react-toast",
+    "notification",
+    "react-notifications",
+    "toast-library",
+    "ui",
+    "typescript",
+    "react-ui",
+    "pulse-toast",
+    "ayantik"
+  ],
+  "author": "Ayantik Sarkar",
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {

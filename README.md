@@ -6,6 +6,8 @@ Pulse Toast helps you display elegant toast notifications in your React applicat
 
 ---
 
+### See examples at - https://pulsetoast.vercel.app
+
 ## ✨ Features
 
 - ⚡ Lightweight and fast
@@ -132,6 +134,109 @@ toast({
   icon: <Check />
 })
 ```
+
+---
+
+## 💡 Code Examples
+
+### Basic Toast
+
+```ts
+import { toast } from "pulse-toast";
+
+toast({
+  message: "Hello developer"
+});
+```
+
+---
+
+### Success Toast
+
+```ts
+toast({
+  message: "Profile updated successfully",
+  type: "success"
+});
+```
+
+---
+
+### Failure Toast
+
+```ts
+toast({
+  message: "Something went wrong",
+  type: "failure"
+});
+```
+
+---
+
+### Custom Duration
+
+```ts
+toast({
+  message: "This will stay longer",
+  duration: 5000
+});
+```
+
+---
+
+### Custom Icon (Emoji)
+
+```ts
+toast({
+  message: "File uploaded",
+  icon: "📁"
+});
+```
+
+---
+
+### Custom Icon (React Icon)
+
+```tsx
+import { Check } from "lucide-react";
+import { toast } from "pulse-toast";
+
+toast({
+  message: "Saved successfully",
+  icon: <Check />
+});
+```
+
+---
+
+### Complete Example
+
+```tsx
+import { Toaster, toast } from "pulse-toast";
+
+function App() {
+  return (
+    <div>
+      <Toaster position="top-right" />
+
+      <button
+        onClick={() =>
+          toast({
+            message: "Welcome to Pulse Toast!",
+            type: "success",
+            duration: 4000
+          })
+        }
+      >
+        Show Toast
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
 
 ## 📚 Why Pulse Toast?
 
