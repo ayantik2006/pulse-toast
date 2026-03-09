@@ -140,7 +140,7 @@ export function Toaster({
                 </div>
               )}
               {toast.icon}
-              <p>{toast.message}</p>
+              <p style={{color:"black"}}>{toast.message}</p>
             </motion.div>
           ))}
         </AnimatePresence>
