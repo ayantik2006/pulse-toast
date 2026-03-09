@@ -63,7 +63,6 @@ export function Toaster({
   const toastStyle: CSSProperties = {
     boxShadow: "0 2px 6px gray",
     padding: "0.5rem 1rem",
-    backgroundColor: "#fff",
     borderRadius: "0.375rem",
     display: "flex",
     width: "fit-content",
@@ -73,6 +72,8 @@ export function Toaster({
     maxWidth: "20rem",
     whiteSpace: "normal",
     overflowWrap: "anywhere",
+    backgroundColor:"white",
+    color:"black"
   };
 
   const successIconContainerStyle: CSSProperties = {
@@ -125,7 +126,6 @@ export function Toaster({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className={toast.className}
               style={toastStyle}
               key={toast.id}
             >
@@ -139,8 +139,8 @@ export function Toaster({
                   <X style={iconStyle} size={12} />
                 </div>
               )}
-              {toast.icon}
-              <p style={{color:"black"}}>{toast.message}</p>
+              <p>{toast.icon}</p>
+              <p>{toast.message}</p>
             </motion.div>
           ))}
         </AnimatePresence>
