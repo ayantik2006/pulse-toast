@@ -32,7 +32,7 @@ export function Toaster({
 
   return createPortal(
     <div
-      className={`flex flex-col ${position === "top-center" ? "items-center" : ""} ${position === "bottom-center" ? "items-center" : ""} gap-3`}
+      className={`flex flex-col z-[999999] ${position === "top-center" ? "items-center" : ""} ${position === "bottom-center" ? "items-center" : ""} gap-3`}
     >
       <div
         className={`flex flex-col items-center gap-2 ${position === "top-center" ? "fixed top-4 h-fit text-wrap mx-auto" : ""} ${position === "bottom-center" ? "fixed bottom-4 h-fit text-wrap mx-auto" : ""} ${position === "top-left" ? "fixed top-4 left-4 h-fit text-wrap mx-auto" : ""} ${position === "top-right" ? "fixed top-4 right-4 h-fit text-wrap mx-auto" : ""} ${position === "bottom-left" ? "fixed bottom-4 left-4 h-fit text-wrap mx-auto" : ""} ${position === "bottom-right" ? "fixed bottom-4 right-4 h-fit text-wrap mx-auto" : ""}`}
@@ -45,7 +45,7 @@ export function Toaster({
               transition={{ duration: 0.3, ease: "easeInOut" }}
               exit={{ opacity: 0, scale: 0.8 }}
               className={`shadow-[0_2px_6px_gray] px-4 py-2 bg-[#fff] rounded-md ${toast.className} flex w-fit min-w-30 gap-2 items-baseline max-w-80 text-wrap wrap-anywhere`}
-              key={index}
+              key={toast.id}
             >
               {toast.type === "success" && !toast.icon && (
                 <div className="bg-green-500 rounded-full p-1 w-5 h-5 flex items-center justify-center">
