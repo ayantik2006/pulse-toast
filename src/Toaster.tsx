@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { subscribe } from "./toast";
 import { createPortal } from "react-dom";
 import { Check, X } from "lucide-react";
@@ -18,6 +18,91 @@ export function Toaster({
     | "bottom-left"
     | "bottom-right";
 }) {
+  const outerStyle: CSSProperties = {
+    display: "flex",
+    flexDirection: "column",
+    zIndex: 999999,
+    gap: "0.75rem",
+    ...(position === "top-center" || position === "bottom-center"
+      ? { alignItems: "center" }
+      : {}),
+  };
+
+  const getPositionStyle = (): CSSProperties => {
+    const baseStyle: CSSProperties = {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "0.5rem",
+      position: "fixed",
+      height: "fit-content",
+      marginLeft: "auto",
+      marginRight: "auto",
+      whiteSpace: "normal",
+      overflowWrap: "anywhere",
+    };
+
+    switch (position) {
+      case "top-center":
+        return { ...baseStyle, top: "1rem" };
+      case "bottom-center":
+        return { ...baseStyle, bottom: "1rem" };
+      case "top-left":
+        return { ...baseStyle, top: "1rem", left: "1rem" };
+      case "top-right":
+        return { ...baseStyle, top: "1rem", right: "1rem" };
+      case "bottom-left":
+        return { ...baseStyle, bottom: "1rem", left: "1rem" };
+      case "bottom-right":
+        return { ...baseStyle, bottom: "1rem", right: "1rem" };
+      default:
+        return baseStyle;
+    }
+  };
+
+  const toastStyle: CSSProperties = {
+    boxShadow: "0 2px 6px gray",
+    padding: "0.5rem 1rem",
+    backgroundColor: "#fff",
+    borderRadius: "0.375rem",
+    display: "flex",
+    width: "fit-content",
+    minWidth: "7.5rem",
+    gap: "0.5rem",
+    alignItems: "baseline",
+    maxWidth: "20rem",
+    whiteSpace: "normal",
+    overflowWrap: "anywhere",
+  };
+
+  const successIconContainerStyle: CSSProperties = {
+    backgroundColor: "#22c55e",
+    borderRadius: "9999px",
+    padding: "0.25rem",
+    width: "1.25rem",
+    height: "1.25rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const failureIconContainerStyle: CSSProperties = {
+    backgroundColor: "#ef4444",
+    borderRadius: "9999px",
+    padding: "0.25rem",
+    width: "1.25rem",
+    height: "1.25rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const iconStyle: CSSProperties = {
+    marginTop: "0.15rem",
+    strokeWidth: 4,
+    color: "#f5f5f5",
+  };
+
   const [toasts, setToasts] = useState<toastPropsType[]>([]);
   const [mounted, setMounted] = useState(false);
 
@@ -31,41 +116,30 @@ export function Toaster({
   if (!mounted) return null;
 
   return createPortal(
-    <div
-      className={`flex flex-col z-[999999] ${position === "top-center" ? "items-center" : ""} ${position === "bottom-center" ? "items-center" : ""} gap-3`}
-    >
-      <div
-        className={`flex flex-col items-center gap-2 ${position === "top-center" ? "fixed top-4 h-fit text-wrap mx-auto" : ""} ${position === "bottom-center" ? "fixed bottom-4 h-fit text-wrap mx-auto" : ""} ${position === "top-left" ? "fixed top-4 left-4 h-fit text-wrap mx-auto" : ""} ${position === "top-right" ? "fixed top-4 right-4 h-fit text-wrap mx-auto" : ""} ${position === "bottom-left" ? "fixed bottom-4 left-4 h-fit text-wrap mx-auto" : ""} ${position === "bottom-right" ? "fixed bottom-4 right-4 h-fit text-wrap mx-auto" : ""}`}
-      >
+    <div style={outerStyle}>
+      <div style={getPositionStyle()}>
         <AnimatePresence>
-          {toasts.map((toast, index) => (
+          {toasts.map((toast) => (
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               exit={{ opacity: 0, scale: 0.8 }}
-              className={`shadow-[0_2px_6px_gray] px-4 py-2 bg-[#fff] rounded-md ${toast.className} flex w-fit min-w-30 gap-2 items-baseline max-w-80 text-wrap wrap-anywhere`}
+              className={toast.className}
+              style={toastStyle}
               key={toast.id}
             >
               {toast.type === "success" && !toast.icon && (
-                <div className="bg-green-500 rounded-full p-1 w-5 h-5 flex items-center justify-center">
-                  <Check
-                    className="stroke-4 stroke-neutral-100 mt-[0.15rem] "
-                    size={12}
-                  />
+                <div style={successIconContainerStyle}>
+                  <Check style={iconStyle} size={12} />
                 </div>
               )}
               {toast.type === "failure" && !toast.icon && (
-                <div className="bg-red-500 rounded-full p-1 w-5 h-5 flex items-center justify-center">
-                  <X
-                    className="stroke-4 stroke-neutral-100 mt-[0.15rem] "
-                    size={12}
-                  />
+                <div style={failureIconContainerStyle}>
+                  <X style={iconStyle} size={12} />
                 </div>
               )}
-              {
-                toast.icon
-              }
+              {toast.icon}
               <p>{toast.message}</p>
             </motion.div>
           ))}
