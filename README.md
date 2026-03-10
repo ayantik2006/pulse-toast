@@ -134,7 +134,26 @@ toast({
   icon: <Check />
 })
 ```
+---
 
+### `closeButton`
+
+- **Type:** `boolean`
+- **Required:** ❌ No
+- **Values:**
+  - `true`
+  - `false`
+- Closes the toast immediately on clicking on it  
+
+Example:
+
+```ts
+toast({
+  message: "Operation successful",
+  type: "success",
+  closeButton: true
+})
+```
 ---
 
 ## 💡 Code Examples

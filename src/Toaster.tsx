@@ -18,6 +18,10 @@ export function Toaster({
     | "bottom-left"
     | "bottom-right";
 }) {
+  const [deletedToasts, setDeletedToasts] = useState<string[]>([]);
+  const [hoveredCloseToastId, setHoveredCloseToastId] = useState<string | null>(
+    null,
+  );
   const outerStyle: CSSProperties = {
     display: "flex",
     flexDirection: "column",
@@ -60,21 +64,21 @@ export function Toaster({
     }
   };
 
-  const toastStyle: CSSProperties = {
-    boxShadow: "0 2px 6px gray",
-    padding: "0.5rem 1rem",
-    borderRadius: "0.375rem",
-    display: "flex",
-    width: "fit-content",
-    minWidth: "7.5rem",
-    gap: "0.5rem",
-    alignItems: "baseline",
-    maxWidth: "20rem",
-    whiteSpace: "normal",
-    overflowWrap: "anywhere",
-    backgroundColor:"white",
-    color:"black"
-  };
+  // const toastStyle: CSSProperties = {
+  //   boxShadow: "0 2px 6px gray",
+  //   padding: "0.5rem 1rem",
+  //   borderRadius: "0.375rem",
+  //   display: deletedToasts.includes(String(toast.id))?"hidden":"flex",
+  //   width: "fit-content",
+  //   minWidth: "7.5rem",
+  //   gap: "0.5rem",
+  //   alignItems: "center",
+  //   maxWidth: "20rem",
+  //   whiteSpace: "normal",
+  //   overflowWrap: "anywhere",
+  //   backgroundColor: "white",
+  //   color: "black",
+  // };
 
   const successIconContainerStyle: CSSProperties = {
     backgroundColor: "#22c55e",
@@ -126,7 +130,23 @@ export function Toaster({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
               exit={{ opacity: 0, scale: 0.8 }}
-              style={toastStyle}
+              style={{
+                boxShadow: "0 2px 6px gray",
+                padding: "0.5rem 1rem",
+                borderRadius: "0.375rem",
+                display: deletedToasts.includes(String(toast.id))
+                  ? "hidden"
+                  : "flex",
+                width: "fit-content",
+                minWidth: "7.5rem",
+                gap: "0.5rem",
+                alignItems: "center",
+                maxWidth: "20rem",
+                whiteSpace: "normal",
+                overflowWrap: "anywhere",
+                backgroundColor: "white",
+                color: "black",
+              }}
               key={toast.id}
             >
               {toast.type === "success" && !toast.icon && (
@@ -141,6 +161,39 @@ export function Toaster({
               )}
               <p>{toast.icon}</p>
               <p>{toast.message}</p>
+              {toast.closeButton && (
+                <div
+                  style={{
+                    width: "fit-content",
+                    marginLeft: "1.25rem",
+                    marginTop: "0.1rem",
+                    padding: "0.15rem",
+                    borderRadius: "0.25rem",
+                    backgroundColor:
+                      hoveredCloseToastId === String(toast.id)
+                        ? "#e5e5e5"
+                        : "transparent",
+                    transitionDuration: "300ms",
+                  }}
+                  onClick={() => {
+                    setDeletedToasts((prev) => {
+                      const newDeletedToasts: string[] = [
+                        ...prev,
+                        String(toast.id),
+                      ];
+                      return newDeletedToasts;
+                    });
+                  }}
+                  onMouseEnter={() => setHoveredCloseToastId(String(toast.id))}
+                  onMouseLeave={() => setHoveredCloseToastId(null)}
+                >
+                  <X
+                    size={15}
+                    style={{ cursor: "pointer", color: "#a3a3a3" }}
+                    strokeWidth={3}
+                  />
+                </div>
+              )}
             </motion.div>
           ))}
         </AnimatePresence>
