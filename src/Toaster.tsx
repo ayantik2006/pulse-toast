@@ -135,7 +135,7 @@ export function Toaster({
                 padding: "0.5rem 1rem",
                 borderRadius: "0.375rem",
                 display: deletedToasts.includes(String(toast.id))
-                  ? "hidden"
+                  ? "none"
                   : "flex",
                 width: "fit-content",
                 minWidth: "7.5rem",

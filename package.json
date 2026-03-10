@@ -1,6 +1,6 @@
 {
   "name": "pulse-toast",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Lightweight toast notification library for React",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
