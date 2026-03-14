@@ -144,8 +144,8 @@ export function Toaster({
                 maxWidth: "20rem",
                 whiteSpace: "normal",
                 overflowWrap: "anywhere",
-                backgroundColor: "white",
-                color: "black",
+                backgroundColor: toast.theme === "dark" ? "#404040" : "white",
+                color: toast.theme === "dark" ? "white" : "black",
               }}
               key={toast.id}
             >

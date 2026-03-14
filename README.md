@@ -145,13 +145,22 @@ toast({
   - `false`
 - Closes the toast immediately on clicking on it  
 
+---
+
+### `theme`
+
+- **Required:** ❌ No
+- **Values:**
+  - `dark`
+  - `default`
+
 Example:
 
 ```ts
 toast({
   message: "Operation successful",
   type: "success",
-  closeButton: true
+  theme: "dark"
 })
 ```
 ---
